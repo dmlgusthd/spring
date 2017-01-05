@@ -1,9 +1,13 @@
 package com.blog.dmlgusthd.web;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.blog.dmlgusthd.service.Board;
 import com.blog.dmlgusthd.service.BoardService;
@@ -27,7 +31,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/boardList")
-	public String boardList(){
+	public String boardList(Model model,
+			@RequestParam(value="currentPage", defaultValue="1") int currentPage){
+		Map<String, Object> returnMap = 
+				boardService.getBoardListPerCurrentPage(currentPage);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("totalRowCount", returnMap.get("totalRowCount"));
+		model.addAttribute("lastPage", returnMap.get("lastPage"));
+		model.addAttribute("list", returnMap.get("list"));
 		return "/board/boardList";
 	}
 }
