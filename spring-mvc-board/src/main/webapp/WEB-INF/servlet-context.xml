@@ -43,7 +43,7 @@
 		</property>
 	</bean>
 	
-	<!-- mybatis를 사용하여 db에접속하여 쿼리를 보내는 주체인 SqlSessionTemplate빈 생성-->
+	<!-- mybatis를 사용해 db에접속하여 쿼리를 보내는 주체인 SqlSessionTemplate빈 생성-->
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory" />
     </bean>

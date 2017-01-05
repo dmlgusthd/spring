@@ -11,11 +11,26 @@ import org.springframework.stereotype.Service;
 public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Override
+	public int updateBoard(Board board){
+		return boardDao.updateBoard(board);
+	}
 
 	@Override
 	public int addBoard(Board board) {
 		// TODO Auto-generated method stub
 		return boardDao.insertBoard(board);
+	}
+	
+	@Override
+	public int deleteBoard(Board board){
+		return boardDao.deleteBoard(board);
+	}
+	
+	@Override
+	public Board getBoardByKey(int boardNo){
+		return boardDao.selectBoardByKey(boardNo);
 	}
 	
 	@Override

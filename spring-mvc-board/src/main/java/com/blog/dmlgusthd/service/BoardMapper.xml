@@ -19,6 +19,35 @@
 			#{boardUser},
 			now())
 	</insert>
+	
+	<update id="updateBoard"
+			parameterType="com.blog.dmlgusthd.service.Board">
+		UPDATE board SET 
+		board_title=#{boardTitle}, 
+		board_content=#{boardContent}
+		WHERE board_no=#{boardNo}
+		AND board_pw=#{boardPw}
+	</update>
+	
+	<select id="selectBoardByKey" parameterType="int"
+			resultType="com.blog.dmlgusthd.service.Board">
+		SELECT 
+			board_no as boardNo,
+			board_title as boardTitle,
+			board_content as boardContent,
+			board_user as boardUser,
+			board_date as boardDate
+		FROM board 
+		WHERE board_no=#{boardNo}
+	</select>
+	
+	<delete id="deleteBoard" 
+			parameterType="com.blog.dmlgusthd.service.Board">
+		DELETE FROM board 
+		WHERE board_no=#{boardNo} 
+		AND board_pw=#{boardPw}
+	</delete>
+	
 	<select id="selectTotalBoardCount" resultType="int">
 		SELECT 
 			COUNT(*) 

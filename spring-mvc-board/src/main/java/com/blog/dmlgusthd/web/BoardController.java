@@ -17,6 +17,39 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	@RequestMapping(value="/board/boardModify", method=RequestMethod.GET)
+	public String updateBoard(Model model,
+			@RequestParam(value="boardNo")int boardNo){
+		model.addAttribute("board", boardService.getBoardByKey(boardNo));
+		return "/board/boardModify";
+	}
+	
+	@RequestMapping(value="/board/boardModify", method=RequestMethod.POST)
+	public String updateBoard(Board board){
+		boardService.updateBoard(board);
+		return "redirect:/board/boardList";
+	}
+	
+	@RequestMapping(value="/board/boardRemove", method=RequestMethod.GET)
+	public String boardRemove(){
+		return "/board/boardRemove";
+	}
+	
+	@RequestMapping(value="/board/boardRemove", method=RequestMethod.POST)
+	public String boardRemove(Board board){
+		boardService.deleteBoard(board);
+		return "redirect:/board/boardList";
+	}
+	
+	@RequestMapping(value="/board/boardView")
+	public String boardView(Model model,
+			@RequestParam(value="boardNo", defaultValue="1") int boardNo){
+		model.addAttribute("board", boardService.getBoardByKey(boardNo));
+		return "/board/boardView";
+	}
+		
+	
+	
 	@RequestMapping(value="/board/boardAdd", method=RequestMethod.GET)
 	public String boardAdd(){
 		return "/board/boardAdd"; //forward
