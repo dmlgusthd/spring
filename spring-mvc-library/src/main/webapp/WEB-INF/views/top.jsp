@@ -20,14 +20,14 @@
 		<a href="javascript:void(0)" class="w3-hover-none w3-padding-large">회원관리 <i class="fa fa-caret-down"></i></a>     
 		<div class="w3-dropdown-content w3-white w3-card-4">
 			<a href="InsertMember">회원등록</a>
-			<a href="#">회원목록</a>
+			<a href="MemberList">회원목록</a>
 		</div>
 	</li>
 	<li class="w3-hide-small w3-dropdown-hover">
 		<a href="javascript:void(0)" class="w3-hover-none w3-padding-large">도서관리 <i class="fa fa-caret-down"></i></a>     
 		<div class="w3-dropdown-content w3-white w3-card-4">
 			<a href="InsertRental">도서등록</a>
-			<a href="#">도서목록</a>
+			<a href="BookList">도서목록</a>
 		</div>
 	</li>
 </ul>

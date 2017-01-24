@@ -4,20 +4,36 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.blog.dmlgusthd.Mapper">
-	<insert id="InsertMember" 
+	<insert id="insertMember" 
 			parameterType="com.blog.dmlgusthd.service.Member">
 		INSERT INTO member(
 			m_name,
 			m_phone,
 			m_address, 
-			m_special
-			) 
+			m_special) 
 		values(
 			#{mName},
 			#{mPhone},
 			#{mAddress},
-			#{mSpecial}
-			)
+			#{mSpecial})
 	</insert>
+
+	<select id="selectMember" parameterType="Map"
+			resultType="com.blog.dmlgusthd.service.Member">
+			SELECT 
+				m_no as mNo,
+				m_name as mName,
+				m_phone as mPhone,
+				m_address as mAddress,
+				m_special as mSpecial
+			FROM member
+			ORDER BY m_no DESC 
+			LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="selectTotalMemberCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM member
+	</select>
 
 </mapper>

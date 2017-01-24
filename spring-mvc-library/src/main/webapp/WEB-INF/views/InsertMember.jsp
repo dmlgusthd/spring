@@ -6,7 +6,6 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>회원등록</title>
-	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -19,19 +18,19 @@
 	<form action="InsertMember" Method="post">
 		<div class="form-group">
 			<label>이름:</label>
-			<input name="name" type="text" class="form-control" style=width:120px>
+			<input name="mName" type="text" class="form-control" style=width:120px>
 		</div>
 		<div class="form-group">
 			<label>전화번호:</label>
-			<input name="phone" type="text" class="form-control" style=width:120px>
+			<input name="mPhone" type="text" class="form-control" style=width:120px>
 		</div>
 		<div class="form-group">
 			<label>주소:</label>
-			<input name="address" type="text" class="form-control" style=width:500px>
+			<input name="mAddress" type="text" class="form-control" style=width:500px>
 		</div>
 		<div class="form-group">
 			<label>회비납부:</label>
-			<select name="special" class="form-control" style=width:120px>
+			<select name="mSpecial" class="form-control" style=width:120px>
 		    	<option>:::선택:::</option>
 		        <option>O</option>
 		        <option>X</option>

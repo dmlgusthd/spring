@@ -10,8 +10,8 @@
 <body>
 <img src="/resources/ddd.png" width="100%">
 <!-- LOGIN FORM -->
-  <div class="w3-display-middle w3-text-white w3-center">
-    <h1 class="w3-jumbo">LOGIN</h1>
+<div class="w3-display-middle w3-text-white w3-center">
+<h1 class="w3-jumbo">LOGIN</h1>
     <form>
     	<div class="form-group">
     		<div>ID</div>
@@ -23,6 +23,7 @@
     	</div>
     	<button type="submit" class="btn btn-default">로그인</button>
     </form>
+</div>
 
 </body>
 </html>

@@ -2,21 +2,28 @@ package com.blog.dmlgusthd.service;
 
 public class Member {
 	
+	private int mNo;
 	private String mName;
-	private int mPhone;
+	private String mPhone;
 	private String mAddress;
 	private char mSpecial;
-	
+
+	public int getmNo() {
+		return mNo;
+	}
+	public void setmNo(int mNo) {
+		this.mNo = mNo;
+	}
 	public String getmName() {
 		return mName;
 	}
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
-	public int getmPhone() {
+	public String getmPhone() {
 		return mPhone;
 	}
-	public void setmPhone(int mPhone) {
+	public void setmPhone(String mPhone) {
 		this.mPhone = mPhone;
 	}
 	public String getmAddress() {
