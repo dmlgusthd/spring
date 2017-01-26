@@ -9,34 +9,38 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<title>대여 등록</title>
+<title>대여 정보</title>
 </head>
 <body>
 <div class="container">
-	<h2>대여 등록</h2>
-	<form action="InsertRental" method="post">
+	<h2>대여 정보</h2>
+	<form action="RentInfo" method="post">
 		<div class="form-group">
 			<label>도서명:</label>
-			<input type="text" name="bmName" class="form-control" style=width:250px>
+			<input type="text" name="bmName" class="form-control" style=width:250px value='${library.bmName}' readonly>
 		</div>
 		<div class="form-group">
 			<label>대여자:</label>
-			<input type="text" name="mName" class="form-control" style=width:150px>
+			<input type="text" name="mName" class="form-control" style=width:150px value='${library.mName}' readonly>
 		</div>
 		<div class="form-group">
 			<label>대여 시작:</label>
-			<input type="date" name="brStart" class="form-control" style=width:150px>
+			<input type="text" name="brStart" class="form-control" style=width:150px value='${library.brStart}' readonly>
 		</div>
 		<div class="form-group">
 			<label>대여 종료:</label>
-			<input type="date" name="brEnd" class="form-control" style=width:150px>
+			<input type="text" name="brEnd" class="form-control" style=width:150px value='${library.brEnd}' readonly>
 		</div>
 		<div class="form-group">
 			<label>선입금:</label>
-			<input type="text" name="brPay" class="form-control" style=width:150px value=0>
+			<input type="text" name="brPay" class="form-control" style=width:150px value='${library.brPay}' readonly>
 		</div>
-		<input type="submit" value="등록">
-		<input type="button" value="취소" onclick="location='/'">
+		<div class="form-group">
+			<label>결제금:</label>
+			<input type="text" class="form-control" style=width:150px value='' readonly>
+		</div>
+		<input type="submit" value="반납">
+		<input type="button" value="목록" onclick="location='RentList'">
 	</form>
 </div>
 </body>

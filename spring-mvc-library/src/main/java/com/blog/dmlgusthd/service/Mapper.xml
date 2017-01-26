@@ -11,13 +11,54 @@
 			m_phone,
 			m_address, 
 			m_special) 
-		values(
+		VALUES(
 			#{mName},
 			#{mPhone},
 			#{mAddress},
 			#{mSpecial})
 	</insert>
-
+	<insert id="insertBook" 
+			parameterType="com.blog.dmlgusthd.service.BManagement">
+		INSERT INTO book_management(
+			bm_name,
+			bm_type,
+			bm_publisher, 
+			bm_writer) 
+		VALUES(
+			#{bmName},
+			#{bmType},
+			#{bmPublisher},
+			#{bmWriter})
+	</insert>
+	<insert id="insertInfo"
+			parameterType="com.blog.dmlgusthd.service.BRent">
+		INSERT INTO book_info (bm_name)  
+		SELECT #{bmName} FROM DUAL  
+		WHERE NOT EXISTS (
+		SELECT * FROM book_info WHERE bm_name=#{bmName})   
+	</insert>
+	<insert id="insertRent"
+			parameterType="com.blog.dmlgusthd.service.BRent">
+		INSERT INTO book_rent(
+			br_no,
+			bm_name,
+			m_name,
+			br_start, 
+			br_end,
+			br_pay) 
+		VALUES(
+			now(),
+			#{bmName},
+			#{mName},
+			#{brStart},
+			#{brEnd},
+			#{brPay})
+	</insert>
+	
+	<select id="day" parametertype="com.blog.dmlgusthd.service.BRent"
+			resultType="int">
+		SELECT(TIMESTAMPDIFF(DAY, #{bmName}, NOW())) FROM book_rent;
+	</select>
 	<select id="selectMember" parameterType="Map"
 			resultType="com.blog.dmlgusthd.service.Member">
 			SELECT 
@@ -34,6 +75,53 @@
 		SELECT 
 			COUNT(*) 
 		FROM member
+	</select>
+	
+	<select id="selectBook" parameterType="Map"
+			resultType="com.blog.dmlgusthd.service.BManagement">
+			SELECT 
+				bm_sn as bmSn,
+				bm_name as bmName,
+				bm_check as bmCheck
+			FROM book_management
+			ORDER BY bm_sn DESC 
+			LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<update id="bookCheck">
+		UPDATE book_management A INNER JOIN book_rent B
+		ON A.bm_name = B.bm_name
+		SET A.bm_check = '불가능'
+	</update>
+	<select id="selectTotalBookCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM book_management
+	</select>
+	<select id="selectRentInfo" parameterType="Map"
+			resultType="com.blog.dmlgusthd.service.BRent">
+			SELECT 
+				bm_name as bmName,
+				m_name as mName,
+				br_start as brStart,
+				br_end as brEnd,
+				br_pay as brPay
+			FROM book_rent
+			WHERE bm_name=#{bmName}
+	</select>
+	<select id="selectRent" parameterType="Map"
+			resultType="com.blog.dmlgusthd.service.BRent">
+			SELECT 
+				br_no as brNo,
+				bm_name as bmName,
+				m_name as mName
+			FROM book_rent
+			ORDER BY br_num DESC 
+			LIMIT #{beginRow},#{pagePerRow}
+	</select>
+	<select id="selectTotalRentCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM book_rent
 	</select>
 
 </mapper>

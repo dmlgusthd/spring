@@ -22,7 +22,11 @@
 		</div>
 		<div class="form-group">
 			<label>전화번호:</label>
-			<input name="mPhone" type="text" class="form-control" style=width:120px>
+			<div>
+				<input type="text" name="phone1" style=width:120px>- 
+				<input type="text" name="phone2" style=width:120px>- 
+				<input type="text" name="phone3" style=width:120px>
+			</div>
 		</div>
 		<div class="form-group">
 			<label>주소:</label>

@@ -18,11 +18,11 @@
 	<table class="table table-hover">
 		<thead align=center>
 			<tr>
-				<td width="100px">번호</td>
-				<td width="100px">이름</td>
-				<td>주소</td>
-				<td width="200px">전화번호</td>
-				<td width="100px">회비납부</td>
+				<td width="100px"><label>번호</label></td>
+				<td width="100px"><label>이름</label></td>
+				<td><label>주소</label></td>
+				<td width="200px"><label>전화번호</label></td>
+				<td width="100px"><label>회비납부</label></td>
 			</tr>
 		</thead>
 		<tbody align=center>
