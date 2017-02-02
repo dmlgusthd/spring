@@ -1,9 +1,5 @@
 package com.blog.dmlgusthd.service;
 
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mysql.jdbc.PreparedStatement;
 
 
 @Service
@@ -25,6 +20,30 @@ public class LibraryService {
 	public int insertMember(Member member){
 		logger.info("입력값 : {}",member);
 		return dao.insertMember(member);
+	}
+	
+	public int deleteRent(String bmName){
+		return dao.deleteRent(bmName);
+	}
+	
+	public int updateManagement(String bmName){
+		return dao.updateManagement(bmName);
+	}
+	
+	public Map<String,Object> updateInfo(String bmName, Integer day){
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("bmName", bmName);
+		map.put("day", day);
+		dao.updateInfo(map);
+		return map;
+	}
+	
+	public int pay(String bmName){
+		return dao.pay(bmName);
+	}
+	
+	public int day(String bmName){
+		return dao.day(bmName);
 	}
 	
 	public int insertBook(BManagement bm){
@@ -41,10 +60,6 @@ public class LibraryService {
 	
 	public BRent selectRentInfo(String bmName){
 		return dao.selectRentInfo(bmName);
-	}
-	
-	public int day(){
-		return dao.day();
 	}
 	
 	public int bookCheck(){

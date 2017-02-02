@@ -29,8 +29,24 @@ public class LibraryDao {
 		return sqlSession.update(NS+"bookCheck");
 	}
 	
-	public int day(){
-		return sqlSession.selectOne(NS+"day");
+	public int deleteRent(String bmName){
+		return sqlSession.delete(NS+"deleteRent", bmName);
+	}
+	
+	public int updateManagement(String bmName){
+		return sqlSession.delete(NS+"updateManagement",bmName);
+	}
+	
+	public int updateInfo(Map<String, Object> map){
+		return sqlSession.update(NS+"updateInfo",map);
+	}
+	
+	public int pay(String bmName){
+		return sqlSession.selectOne(NS+"pay",bmName);
+	}
+	
+	public int day(String bmName){
+		return sqlSession.selectOne(NS+"day",bmName);
 	}
 	
 	public BRent selectRentInfo(String bmName){

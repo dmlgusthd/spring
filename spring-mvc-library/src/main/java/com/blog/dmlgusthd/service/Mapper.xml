@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace="com.blog.dmlgusthd.Mapper">
+<!-- 회원 등록하는 쿼리 -->
 	<insert id="insertMember" 
 			parameterType="com.blog.dmlgusthd.service.Member">
 		INSERT INTO member(
@@ -17,6 +18,7 @@
 			#{mAddress},
 			#{mSpecial})
 	</insert>
+<!-- 도서등록 하는 쿼리 -->	
 	<insert id="insertBook" 
 			parameterType="com.blog.dmlgusthd.service.BManagement">
 		INSERT INTO book_management(
@@ -30,6 +32,7 @@
 			#{bmPublisher},
 			#{bmWriter})
 	</insert>
+<!-- 대상책의 이름과 최초대여 날짜 등록하는 쿼리(해당 책이 없으면 INSERT하고 있으면 안한다) -->
 	<insert id="insertInfo"
 			parameterType="com.blog.dmlgusthd.service.BRent">
 		INSERT INTO book_info (bm_name)  
@@ -37,6 +40,7 @@
 		WHERE NOT EXISTS (
 		SELECT * FROM book_info WHERE bm_name=#{bmName})   
 	</insert>
+<!-- 대여등록 하는 쿼리 -->
 	<insert id="insertRent"
 			parameterType="com.blog.dmlgusthd.service.BRent">
 		INSERT INTO book_rent(
@@ -54,11 +58,36 @@
 			#{brEnd},
 			#{brPay})
 	</insert>
-	
-	<select id="day" parametertype="com.blog.dmlgusthd.service.BRent"
-			resultType="int">
-		SELECT(TIMESTAMPDIFF(DAY, #{bmName}, NOW())) FROM book_rent;
+<!-- 반납시 대여등록 리스트에서 삭제하는 쿼리 -->
+	<delete id="deleteRent">
+		DELETE FROM book_rent
+		WHERE bm_name=#{bmName}
+	</delete>
+<!-- 반납시 해당도서의 도서대여상태를 '가능'으로 바꿔주는 쿼리 -->	
+	<update id="updateManagement">
+		UPDATE book_management SET
+			bm_check='가능'
+		WHERE bm_name=#{bmName}
+	</update>
+<!-- 반납시 해당도서의 대여횟수와 총대여일을 추가하는 쿼리 -->
+	<update id="updateInfo">
+		UPDATE book_info SET 
+			bi_count=bi_count+1, 
+			bi_day=bi_day+#{day} 
+		WHERE bm_name=#{bmName}
+	</update>
+<!-- 선입금했던 금액 가져오기 쿼리 -->
+	<select id="pay" resultType="int">
+		SELECT br_pay 
+		FROM book_rent 
+		WHERE bm_name=#{bmName}
 	</select>
+<!-- 현재날짜에서 빌린날짜의 일수차이 구하기 쿼리 -->
+	<select id="day" resultType="int">
+		SELECT TIMESTAMPDIFF(DAY, br_start, NOW()) 
+		FROM book_rent WHERE bm_name=#{bmName}
+	</select>
+<!-- 멤버 리스트 가져오기 쿼리 -->	
 	<select id="selectMember" parameterType="Map"
 			resultType="com.blog.dmlgusthd.service.Member">
 			SELECT 
@@ -70,13 +99,13 @@
 			FROM member
 			ORDER BY m_no DESC 
 			LIMIT #{beginRow},#{pagePerRow}
-	</select>
+	</select>	
 	<select id="selectTotalMemberCount" resultType="int">
 		SELECT 
 			COUNT(*) 
 		FROM member
 	</select>
-	
+<!-- 도서리스트 가져오는 쿼리 -->
 	<select id="selectBook" parameterType="Map"
 			resultType="com.blog.dmlgusthd.service.BManagement">
 			SELECT 
@@ -87,6 +116,7 @@
 			ORDER BY bm_sn DESC 
 			LIMIT #{beginRow},#{pagePerRow}
 	</select>
+<!-- 등록된 도서와 대여등록 된 도서를 비교하여 일치하는 것이 있으면(대여할경우) 도서대여상태를 '불가능'으로 바꾼다 -->
 	<update id="bookCheck">
 		UPDATE book_management A INNER JOIN book_rent B
 		ON A.bm_name = B.bm_name
@@ -97,6 +127,7 @@
 			COUNT(*) 
 		FROM book_management
 	</select>
+<!-- 대여된 도서의 정보를 가져오는 쿼리 -->
 	<select id="selectRentInfo" parameterType="Map"
 			resultType="com.blog.dmlgusthd.service.BRent">
 			SELECT 
@@ -108,6 +139,7 @@
 			FROM book_rent
 			WHERE bm_name=#{bmName}
 	</select>
+<!-- 대여등록 리스트 가져오는 쿼리 -->
 	<select id="selectRent" parameterType="Map"
 			resultType="com.blog.dmlgusthd.service.BRent">
 			SELECT 

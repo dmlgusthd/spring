@@ -1,8 +1,6 @@
 package com.blog.dmlgusthd.web;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +18,6 @@ import com.blog.dmlgusthd.service.BManagement;
 import com.blog.dmlgusthd.service.BRent;
 import com.blog.dmlgusthd.service.LibraryService;
 import com.blog.dmlgusthd.service.Member;
-import com.mysql.jdbc.PreparedStatement;
 
 
 @Controller
@@ -43,10 +39,6 @@ public class LibraryController {
 		return "MemberList";
 	}
 	
-	@RequestMapping(value="InsertRental", method=RequestMethod.GET)
-	public String insertRental(){
-		return "InsertRental";
-	}
 	
 	@RequestMapping(value="RentList")
 	public String rentList(Model model,
@@ -60,15 +52,35 @@ public class LibraryController {
 		return "RentList";
 	}
 	
-	@RequestMapping(value="RentInfo")
-	public String rentInfo(Model model,String bmName){
+	@RequestMapping(value="RentInfo", method=RequestMethod.GET)
+	public String rentInfo(Model model,String bmName) throws ParseException{
+		// 현재날짜에서 빌려간날짜와의 일수 차이를 구한다
+		int day = libraryService.day(bmName);
+		// 대여할때 선입금 했던 금액을 가져온다
+		int pay = libraryService.pay(bmName);
+		// 최종 결제금을 구한다
+		int payment = (day*300)-pay;
+		model.addAttribute("payment",payment);
 		model.addAttribute("library",libraryService.selectRentInfo(bmName));
-		int day = libraryService.day();
-		model.addAttribute("day",day);
 		return "RentInfo";
 	}
 	
-	@Transactional
+	@RequestMapping(value="RentInfo", method=RequestMethod.POST)
+	public String retnInfo(String bmName, Integer day){
+		day = libraryService.day(bmName);
+		libraryService.deleteRent(bmName);
+		libraryService.updateManagement(bmName);
+		libraryService.updateInfo(bmName, day);
+		return "redirect:RentList";
+	}
+	
+
+	@RequestMapping(value="InsertRental", method=RequestMethod.GET)
+	public String insertRental(){
+		return "InsertRental";
+	}
+	
+	
 	@RequestMapping(value="InsertRental", method=RequestMethod.POST)
 	public String insertRental(BRent br){
 		logger.info("대여등록 입력값:{}",br);

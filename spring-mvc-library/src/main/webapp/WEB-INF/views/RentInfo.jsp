@@ -37,7 +37,7 @@
 		</div>
 		<div class="form-group">
 			<label>결제금:</label>
-			<input type="text" class="form-control" style=width:150px value='' readonly>
+			<input type="text" class="form-control" style=width:150px value='${payment}' readonly>
 		</div>
 		<input type="submit" value="반납">
 		<input type="button" value="목록" onclick="location='RentList'">

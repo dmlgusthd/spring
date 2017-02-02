@@ -26,9 +26,9 @@
 		<tbody align=center>
 		<c:forEach var="b" items="${list}">
 			<tr>
-				<td>${b.bmSn}</td>
+				<td><label>${b.bmSn}</label></td>
 				<td>${b.bmName}</td>
-				<td>${b.bmCheck}</td>
+				<td><label>${b.bmCheck}</label></td>
 			</tr>
 		</c:forEach>
 		</tbody>
