@@ -28,11 +28,11 @@
 		<tbody align=center>
 		<c:forEach var="m" items="${list}">
 			<tr>
-				<td>${m.mNo}</td>
-				<td>${m.mName}</td>
-				<td>${m.mAddress}</td>
-				<td>${m.mPhone}</td>
-				<td>${m.mSpecial}</td>
+				<td><label>${m.mNo}</label></td>
+				<td><a href="UpdateMember?mNo=${m.mNo}">${m.mName}</a></td>
+				<td><label>${m.mAddress}</label></td>
+				<td><label>${m.mPhone}</label></td>
+				<td><label>${m.mSpecial}</label></td>
 			</tr>
 		</c:forEach>
 		</tbody>

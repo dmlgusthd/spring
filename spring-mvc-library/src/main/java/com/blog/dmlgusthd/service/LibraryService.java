@@ -66,6 +66,18 @@ public class LibraryService {
 		return dao.bookCheck();
 	}
 	
+	public Member selectOneMember(int mNo){
+		return dao.selectOneMember(mNo);
+	}
+	
+	public int updateMember(Member member){
+		return dao.updateMember(member);
+	}
+	
+	public int deleteMember(int mNo){
+		return dao.deleteMember(mNo);
+	}
+	
 	public Map<String,Object> selectRent(int currentPage){
 		int pagePerRow = 10;
 		int beginRow = (currentPage-1)*pagePerRow;

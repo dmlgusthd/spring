@@ -32,7 +32,7 @@
 			#{bmPublisher},
 			#{bmWriter})
 	</insert>
-<!-- 대상책의 이름과 최초대여 날짜 등록하는 쿼리(해당 책이 없으면 INSERT하고 있으면 안한다) -->
+<!-- 대상책의 이름과 최초대여 날짜 등록하는 쿼리(해당 도서가 없으면 INSERT하고 있으면 안한다) -->
 	<insert id="insertInfo"
 			parameterType="com.blog.dmlgusthd.service.BRent">
 		INSERT INTO book_info (bm_name)  
@@ -76,6 +76,21 @@
 			bi_day=bi_day+#{day} 
 		WHERE bm_name=#{bmName}
 	</update>
+<!-- 회원정보 수정하는 쿼리 -->
+	<update id="updateMember"
+			parameterType="com.blog.dmlgusthd.service.Member">
+		UPDATE member SET
+			m_name=#{mName},
+			m_phone=#{mPhone},
+			m_address=#{mAddress},
+			m_special=#{mSpecial}
+		WHERE m_no=#{mNo}
+	</update>
+<!-- 회원 삭제하는 쿼리 -->	
+	<delete id="deleteMember">
+		DELETE FROM member
+		WHERE m_no=#{mNo}
+	</delete>
 <!-- 선입금했던 금액 가져오기 쿼리 -->
 	<select id="pay" resultType="int">
 		SELECT br_pay 
@@ -86,6 +101,18 @@
 	<select id="day" resultType="int">
 		SELECT TIMESTAMPDIFF(DAY, br_start, NOW()) 
 		FROM book_rent WHERE bm_name=#{bmName}
+	</select>
+<!-- 멤버 한명의 정보 가져오기 쿼리 -->	
+	<select id="selectOneMember"
+			resultType="com.blog.dmlgusthd.service.Member">
+		SELECT 
+			m_no as mNo,
+			m_name as mName,
+			m_phone as mPhone,
+			m_address as mAddress,
+			m_special as mSpecial
+		FROM member
+		WHERE m_no=#{mNo}
 	</select>
 <!-- 멤버 리스트 가져오기 쿼리 -->	
 	<select id="selectMember" parameterType="Map"
@@ -116,7 +143,7 @@
 			ORDER BY bm_sn DESC 
 			LIMIT #{beginRow},#{pagePerRow}
 	</select>
-<!-- 등록된 도서와 대여등록 된 도서를 비교하여 일치하는 것이 있으면(대여할경우) 도서대여상태를 '불가능'으로 바꾼다 -->
+<!-- 등록된 도서와 대여등록 된 도서를 비교하여 일치하는 것이 있으면(대여할경우) 도서대여상태를 '불가능'으로 바꾸는 쿼리 -->
 	<update id="bookCheck">
 		UPDATE book_management A INNER JOIN book_rent B
 		ON A.bm_name = B.bm_name

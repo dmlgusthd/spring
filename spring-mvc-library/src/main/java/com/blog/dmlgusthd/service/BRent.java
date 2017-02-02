@@ -2,11 +2,15 @@ package com.blog.dmlgusthd.service;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class BRent {
 	private String brNo;
 	private String bmName;
 	private String mName;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date brStart;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date brEnd;
 	private int brPay;
 	
