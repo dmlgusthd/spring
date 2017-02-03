@@ -1,10 +1,11 @@
 package com.blog.dmlgusthd.web;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.JOptionPane;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.blog.dmlgusthd.service.BManagement;
 import com.blog.dmlgusthd.service.BRent;
 import com.blog.dmlgusthd.service.LibraryService;
+import com.blog.dmlgusthd.service.Manager;
 import com.blog.dmlgusthd.service.Member;
 
 
@@ -43,10 +46,11 @@ public class LibraryController {
 	
 	/* 회원 한명의 정보 가져오는 메소드 */
 	@RequestMapping(value="UpdateMember", method=RequestMethod.GET)
-	public String UpdateMember(Model model,int mNo){
+	public String updateMember(Model model,int mNo){
 		model.addAttribute("member",libraryService.selectOneMember(mNo));
 		return "UpdateMember";
 	}
+	
 	
 	/* 회원정보 수정하는 메소드 */
 	@RequestMapping(value="UpdateMember", method=RequestMethod.POST)
@@ -54,17 +58,12 @@ public class LibraryController {
 		libraryService.updateMember(member);
 		return "redirect:MemberList";
 	}
-	
-	@RequestMapping(value="DeleteMember")
-	public String deleteMember(int mNo){
-		if(JOptionPane.showConfirmDialog(null, "삭제 하시겠습니까?", "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != JOptionPane.NO_OPTION){
-			libraryService.deleteMember(mNo);
-			return "redirect:MemberList";
-		} else {
-			
-		}
-			
-		return null;
+
+	@RequestMapping(value="BookInfo")
+	public String bookInfo(Model model, String bmName){
+		model.addAttribute("book",libraryService.selectOneBook(bmName));
+		model.addAttribute("info",libraryService.selectBookInfo(bmName));
+		return "BookInfo";
 	}
 	
 	/* 대여등록 리스트 가져오는 메소드 */
@@ -172,9 +171,31 @@ public class LibraryController {
 		return "InsertMember";
 	}
 	
-	@RequestMapping(value = "/", method=RequestMethod.GET)
-	public String home() {
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String login() {
 		return "Index";
 	}
 	
+	/* 로그아웃 */
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+	    session.setAttribute("manager", null);
+	    return "redirect:/";
+	}
+	/* 로그인 */
+	@RequestMapping(value="loginProcess", method = RequestMethod.POST)
+		public ModelAndView loginProcess(Manager manager, HttpSession session, String id, String pw) {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("redirect:/");
+			Map<String,Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("pw", pw);
+			Manager loginmanager = libraryService.selectIdPw(map);
+			 
+			if (loginmanager != null) {
+			session.setAttribute("manager", loginmanager);
+		}
+		return mav;
+	}
+
 }

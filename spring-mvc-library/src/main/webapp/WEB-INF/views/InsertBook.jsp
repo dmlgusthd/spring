@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="top.jsp" %>
+<%@ page session="true" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -53,7 +54,7 @@
 			<input type="text" name="bmPublisher" class="form-control" style=width:120px>
 		</div>
 		<input type="submit" value="등록">
-		<button onclick="location=''">취소</button>
+		<input type="button" value="목록" onclick="location='BookList'">
 	</form>
 </div>
 

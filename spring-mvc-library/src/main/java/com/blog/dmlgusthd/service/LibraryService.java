@@ -70,12 +70,20 @@ public class LibraryService {
 		return dao.selectOneMember(mNo);
 	}
 	
+	public BManagement selectOneBook(String bmName){
+		return dao.selectOneBook(bmName);
+	}
+	
+	public BInfo selectBookInfo(String bmName){
+		return dao.selectBookInfo(bmName);
+	}
+	
 	public int updateMember(Member member){
 		return dao.updateMember(member);
 	}
 	
-	public int deleteMember(int mNo){
-		return dao.deleteMember(mNo);
+	public Manager selectIdPw(Map<String,Object> map){
+		return dao.selectIdPw(map);
 	}
 	
 	public Map<String,Object> selectRent(int currentPage){

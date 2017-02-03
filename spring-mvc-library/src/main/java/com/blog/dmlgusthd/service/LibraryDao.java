@@ -61,12 +61,20 @@ public class LibraryDao {
 		return sqlSession.selectOne(NS+"selectOneMember",mNo);
 	}
 	
-	public int updateMember(Member member){
-		return sqlSession.update(NS+"updateMember",member);
+	public BManagement selectOneBook(String bmName){
+		return sqlSession.selectOne(NS+"selectOneBook",bmName);
 	}
 	
-	public int deleteMember(int mNo){
-		return sqlSession.delete(NS+"deleteMember",mNo);
+	public BInfo selectBookInfo(String bmName){
+		return sqlSession.selectOne(NS+"selectBookInfo",bmName);
+	}
+	
+	public Manager selectIdPw(Map<String,Object> map){
+		return sqlSession.selectOne(NS+"selectIdPw",map);
+	}
+	
+	public int updateMember(Member member){
+		return sqlSession.update(NS+"updateMember",member);
 	}
 	
 	public List<Member> selectMember(Map<String, Integer>map){

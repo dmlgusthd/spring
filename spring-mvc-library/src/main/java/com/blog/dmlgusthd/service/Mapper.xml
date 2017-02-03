@@ -86,11 +86,6 @@
 			m_special=#{mSpecial}
 		WHERE m_no=#{mNo}
 	</update>
-<!-- 회원 삭제하는 쿼리 -->	
-	<delete id="deleteMember">
-		DELETE FROM member
-		WHERE m_no=#{mNo}
-	</delete>
 <!-- 선입금했던 금액 가져오기 쿼리 -->
 	<select id="pay" resultType="int">
 		SELECT br_pay 
@@ -102,7 +97,37 @@
 		SELECT TIMESTAMPDIFF(DAY, br_start, NOW()) 
 		FROM book_rent WHERE bm_name=#{bmName}
 	</select>
+<!-- 해당 도서의 이름,종류,출판사,저자 가져오기 쿼리 -->	
+	<select id="selectOneBook"
+			resultType="com.blog.dmlgusthd.service.BManagement">
+		SELECT
+			bm_name as bmName,
+			bm_type as bmType,
+			bm_publisher as bmPublisher, 
+			bm_writer as bmWriter
+		FROM book_management
+		WHERE bm_name=#{bmName}
+	</select>
+<!-- 해당 도서의 첫 대여일,대여횟수,일수 가져오기 쿼리 -->
+	<select id="selectBookInfo"
+			resultType="com.blog.dmlgusthd.service.BInfo">
+		SELECT
+			bi_firstrent as biFirstrent,
+			bi_count as biCount,
+			bi_day as biDay
+		FROM book_info
+		WHERE bm_name=#{bmName}
+	</select>
 <!-- 멤버 한명의 정보 가져오기 쿼리 -->	
+	<select id="selectIdPw"
+			resultType="com.blog.dmlgusthd.service.Manager">
+		SELECT 
+			m_id as mId,
+			m_pw as mPw
+		FROM manager 
+		WHERE m_id=#{id}
+		AND m_pw=#{pw}
+	</select>
 	<select id="selectOneMember"
 			resultType="com.blog.dmlgusthd.service.Member">
 		SELECT 

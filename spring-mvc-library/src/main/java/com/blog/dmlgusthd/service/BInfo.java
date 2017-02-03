@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class BInfo {
 	private String bmName;
-	private Date biFirstretn;
+	private Date biFirstrent;
 	private int biCount;
 	private int biDay;
 	
@@ -14,11 +14,11 @@ public class BInfo {
 	public void setBmName(String bmName) {
 		this.bmName = bmName;
 	}
-	public Date getBiFirstretn() {
-		return biFirstretn;
+	public Date getBiFirstrent() {
+		return biFirstrent;
 	}
-	public void setBiFirstretn(Date biFirstretn) {
-		this.biFirstretn = biFirstretn;
+	public void setBiFirstrent(Date biFirstrent) {
+		this.biFirstrent = biFirstrent;
 	}
 	public int getBiCount() {
 		return biCount;
@@ -34,7 +34,7 @@ public class BInfo {
 	}
 	@Override
 	public String toString() {
-		return "BInfo [bmName=" + bmName + ", biFirstretn=" + biFirstretn + ", biCount=" + biCount + ", biDay=" + biDay
+		return "BInfo [bmName=" + bmName + ", biFirstrent=" + biFirstrent + ", biCount=" + biCount + ", biDay=" + biDay
 				+ "]";
 	}
 	
