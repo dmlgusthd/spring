@@ -82,6 +82,18 @@ public class LibraryService {
 		return dao.updateMember(member);
 	}
 	
+	public int InsertBookDisuse(Integer bmSn){
+		return dao.InsertBookDisuse(bmSn);
+	}
+	
+	public Member selectSpecail(String mPhone){
+		return dao.selectSpecail(mPhone);
+	}
+	
+	public List<Member> selectName(){
+		return dao.selectName();
+	}
+	
 	public Manager selectIdPw(Map<String,Object> map){
 		return dao.selectIdPw(map);
 	}

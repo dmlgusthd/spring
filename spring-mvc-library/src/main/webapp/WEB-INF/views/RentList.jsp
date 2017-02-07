@@ -27,7 +27,7 @@
 		<c:forEach var="b" items="${list}">
 			<tr>
 				<td>${b.brNo}</td>
-				<td><a href="RentInfo?bmName=${b.bmName}">${b.bmName}</a></td>
+				<td><a href="RentInfo?bmName=${b.bmName}&&mName=${b.mName}">${b.bmName}</a></td>
 				<td>${b.mName}</td>
 			</tr>
 		</c:forEach>

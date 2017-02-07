@@ -43,6 +43,10 @@
 		<input type="text" class="form-control" style=width:120px value='${info.biDay}' readonly>
 	</div>
 	<input type="button" value="목록" onclick="location='BookList'">
+	<form action="BookDisuse" method="post">
+		<input type="hidden" name="bmSn" value='${book.bmSn}'>
+		<input type="submit" value="폐기등록">
+	</form>
 </div>
 
 </body>

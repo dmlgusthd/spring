@@ -69,6 +69,13 @@
 			bm_check='가능'
 		WHERE bm_name=#{bmName}
 	</update>
+<!-- 폐기등록 -->	
+	<update id="InsertBookDisuse">
+		UPDATE book_management SET
+			bm_check='폐기대상',
+			bm_disuse=now()
+		WHERE bm_sn=#{bmSn}
+	</update>
 <!-- 반납시 해당도서의 대여횟수와 총대여일을 추가하는 쿼리 -->
 	<update id="updateInfo">
 		UPDATE book_info SET 
@@ -97,10 +104,16 @@
 		SELECT TIMESTAMPDIFF(DAY, br_start, NOW()) 
 		FROM book_rent WHERE bm_name=#{bmName}
 	</select>
+<!-- 폐기등록 된 시점 이후 100일 지난 데이터 삭제하기 쿼리 -->
+	<delete id="disuseDelete">
+		<![CDATA[DELETE FROM book_management 
+		WHERE DATE_ADD(bm_disuse, INTERVAL '100' DAY) < now()]]>
+	</delete>
 <!-- 해당 도서의 이름,종류,출판사,저자 가져오기 쿼리 -->	
 	<select id="selectOneBook"
 			resultType="com.blog.dmlgusthd.service.BManagement">
 		SELECT
+			bm_sn as bmSn,
 			bm_name as bmName,
 			bm_type as bmType,
 			bm_publisher as bmPublisher, 
@@ -117,8 +130,8 @@
 			bi_day as biDay
 		FROM book_info
 		WHERE bm_name=#{bmName}
-	</select>
-<!-- 멤버 한명의 정보 가져오기 쿼리 -->	
+	</select>	
+<!-- 아이디 비번 일치하는지 -->
 	<select id="selectIdPw"
 			resultType="com.blog.dmlgusthd.service.Manager">
 		SELECT 
@@ -128,6 +141,19 @@
 		WHERE m_id=#{id}
 		AND m_pw=#{pw}
 	</select>
+	<select id="selectSpecail"
+			resultType="com.blog.dmlgusthd.service.Member">
+		SELECT m_special as mSpecial
+		FROM member 
+		WHERE m_phone=#{mPhone}
+	</select>
+<!-- 대여등록 페이지에 이름 목록 뿌려주기 -->
+	<select id="selectName"
+			resultType="com.blog.dmlgusthd.service.Member">
+		SELECT concat(m_name,'/',m_phone) as mName
+		FROM member
+	</select>
+<!-- 멤버 한명의 정보 가져오기 쿼리 -->
 	<select id="selectOneMember"
 			resultType="com.blog.dmlgusthd.service.Member">
 		SELECT 

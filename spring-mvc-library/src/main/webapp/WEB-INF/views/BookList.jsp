@@ -14,8 +14,8 @@
 <body>
 <c:choose>
     <c:when test="${not empty sessionScope.manager}">
-	<div class="container">
 	<%@ include file="top.jsp" %>
+	<div class="container">
 		<h2 align=center>도서 목록</h2>           
 		<input type ="button" value="등록하기" onclick="location='InsertBook'">
 		<table class="table table-hover">

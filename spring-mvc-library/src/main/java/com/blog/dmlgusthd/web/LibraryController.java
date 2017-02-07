@@ -3,6 +3,7 @@ package com.blog.dmlgusthd.web;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -80,17 +81,33 @@ public class LibraryController {
 	}
 	/* 대여등록된 도서의 정보 가져오는 메소드 */
 	@RequestMapping(value="RentInfo", method=RequestMethod.GET)
-	public String rentInfo(Model model,String bmName) throws ParseException{
+	public String rentInfo(Model model,String bmName,String mName) throws ParseException{
 		// 도서대여 하루당 300원으로 임의정함
 		// 현재날짜에서 빌려간날짜와의 일수 차이를 구한다
 		int day = libraryService.day(bmName);
 		// 대여할때 선입금 했던 금액을 가져온다
 		int pay = libraryService.pay(bmName);
+		int i = mName.indexOf("/");
+		String mPhone = mName.substring(i+1);
+		Member mSpecial = libraryService.selectSpecail(mPhone);
+		char sp = mSpecial.getmSpecial();
+		logger.debug("값{}",mSpecial);
 		// 최종 결제금을 구한다
-		int payment = (day*300)-pay;
-		model.addAttribute("payment",payment);
-		model.addAttribute("library",libraryService.selectRentInfo(bmName));
-		return "RentInfo";
+		if(sp == 'O'){
+			System.out.println("if문 실행");
+			int payment = (day*200)-pay;
+			model.addAttribute("payment",payment);
+			model.addAttribute("library",libraryService.selectRentInfo(bmName));
+			
+			return "RentInfo";
+		} else {
+			System.out.println("else문 실행");
+			int payment = (day*300)-pay;
+			model.addAttribute("payment",payment);
+			model.addAttribute("library",libraryService.selectRentInfo(bmName));
+			
+			return "RentInfo";
+		}
 	}
 	/* 반납 메소드 */
 	@RequestMapping(value="RentInfo", method=RequestMethod.POST)
@@ -108,7 +125,8 @@ public class LibraryController {
 	
 
 	@RequestMapping(value="InsertRental", method=RequestMethod.GET)
-	public String insertRental(){
+	public String insertRental(Model model){
+		model.addAttribute("name",libraryService.selectName());
 		return "InsertRental";
 	}
 	
@@ -150,6 +168,12 @@ public class LibraryController {
 		model.addAttribute("lastPage", returnMap.get("lastPage"));
 		model.addAttribute("list", returnMap.get("list"));
 		return "BookList";
+	}
+	
+	@RequestMapping(value="BookDisuse", method=RequestMethod.POST)
+	public String insertBookDisuse(Integer bmSn){
+		libraryService.InsertBookDisuse(bmSn);
+		return "redirect:BookList";
 	}
 	
 	@RequestMapping(value="InsertMember", method=RequestMethod.GET)

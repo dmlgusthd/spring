@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="top.jsp" %>
-<%@ page session="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,7 +22,11 @@
 		</div>
 		<div class="form-group">
 			<label>대여자:</label>
-			<input type="text" name="mName" class="form-control" style=width:150px>
+			<select name="mName" class="form-control" style=width:120px>
+			<c:forEach var="member" items="${name}">
+				<option>${member.mName}</option>
+			</c:forEach>
+			</select>
 		</div>
 		<div class="form-group">
 			<label>대여 시작:</label>

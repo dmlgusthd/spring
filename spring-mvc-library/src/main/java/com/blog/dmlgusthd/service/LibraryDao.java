@@ -77,6 +77,22 @@ public class LibraryDao {
 		return sqlSession.update(NS+"updateMember",member);
 	}
 	
+	public Member selectSpecail(String mPhone){
+		return sqlSession.selectOne(NS+"selectSpecail",mPhone);
+	}
+	
+	public int disuseDelete(){
+		return sqlSession.delete(NS+"disuseDelete");
+	}
+	
+	public List<Member> selectName(){
+		return sqlSession.selectList(NS+"selectName");
+	}
+	
+	public int InsertBookDisuse(Integer bmSn){
+		return sqlSession.update(NS+"InsertBookDisuse",bmSn);
+	}
+	
 	public List<Member> selectMember(Map<String, Integer>map){
 		return sqlSession.selectList(NS+"selectMember",map);
 	}
