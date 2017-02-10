@@ -69,13 +69,6 @@
 			bm_check='가능'
 		WHERE bm_name=#{bmName}
 	</update>
-<!-- 폐기등록 -->	
-	<update id="InsertBookDisuse">
-		UPDATE book_management SET
-			bm_check='폐기대상',
-			bm_disuse=now()
-		WHERE bm_sn=#{bmSn}
-	</update>
 <!-- 반납시 해당도서의 대여횟수와 총대여일을 추가하는 쿼리 -->
 	<update id="updateInfo">
 		UPDATE book_info SET 
@@ -83,6 +76,14 @@
 			bi_day=bi_day+#{day} 
 		WHERE bm_name=#{bmName}
 	</update>
+<!-- 폐기등록 -->	
+	<update id="InsertBookDisuse">
+		UPDATE book_management SET
+			bm_check='폐기대상',
+			bm_disuse=now()
+		WHERE bm_sn=#{bmSn}
+	</update>
+
 <!-- 회원정보 수정하는 쿼리 -->
 	<update id="updateMember"
 			parameterType="com.blog.dmlgusthd.service.Member">
@@ -141,6 +142,7 @@
 		WHERE m_id=#{id}
 		AND m_pw=#{pw}
 	</select>
+<!-- 회비 납부한 회원인지 아닌지 정보 가져온다 -->	
 	<select id="selectSpecail"
 			resultType="com.blog.dmlgusthd.service.Member">
 		SELECT m_special as mSpecial
@@ -194,17 +196,17 @@
 			ORDER BY bm_sn DESC 
 			LIMIT #{beginRow},#{pagePerRow}
 	</select>
+	<select id="selectTotalBookCount" resultType="int">
+		SELECT 
+			COUNT(*) 
+		FROM book_management
+	</select>
 <!-- 등록된 도서와 대여등록 된 도서를 비교하여 일치하는 것이 있으면(대여할경우) 도서대여상태를 '불가능'으로 바꾸는 쿼리 -->
 	<update id="bookCheck">
 		UPDATE book_management A INNER JOIN book_rent B
 		ON A.bm_name = B.bm_name
 		SET A.bm_check = '불가능'
 	</update>
-	<select id="selectTotalBookCount" resultType="int">
-		SELECT 
-			COUNT(*) 
-		FROM book_management
-	</select>
 <!-- 대여된 도서의 정보를 가져오는 쿼리 -->
 	<select id="selectRentInfo" parameterType="Map"
 			resultType="com.blog.dmlgusthd.service.BRent">

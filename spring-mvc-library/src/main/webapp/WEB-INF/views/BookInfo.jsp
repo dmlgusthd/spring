@@ -44,8 +44,8 @@
 	</div>
 	<input type="button" value="목록" onclick="location='BookList'">
 	<form action="BookDisuse" method="post">
-		<input type="hidden" name="bmSn" value='${book.bmSn}'>
-		<input type="submit" value="폐기등록">
+		<input type="hidden" name="bmSn" value='${book.bmSn}'><br>
+		<input type="submit" value="폐기등록">*클릭시 바로 폐기등록이 되고 취소할 수 없습니다. 주의해서 클릭하세요.
 	</form>
 </div>
 

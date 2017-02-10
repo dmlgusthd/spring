@@ -87,6 +87,7 @@ public class LibraryController {
 		int day = libraryService.day(bmName);
 		// 대여할때 선입금 했던 금액을 가져온다
 		int pay = libraryService.pay(bmName);
+		// 회비 납부 회원인지 아닌지 정보를 가져온다
 		int i = mName.indexOf("/");
 		String mPhone = mName.substring(i+1);
 		Member mSpecial = libraryService.selectSpecail(mPhone);
