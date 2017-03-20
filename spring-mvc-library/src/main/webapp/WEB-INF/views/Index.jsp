@@ -27,11 +27,11 @@
 	    <form action="loginProcess" method="post">
 	    	<div class="form-group">
 	    		<div>ID</div>
-	    		<input type="text" name="id" style="text-align:center;">
+	    		<input type="text" name="id" style="text-align:center;" value="id001">
 	    	</div>
 	    	<div class="form-group">
 	    		<div>PW</div>
-	    		<input type="password" name="pw" style="text-align:center;">
+	    		<input type="password" name="pw" style="text-align:center;" value="pw001">
 	    	</div>
                 <input type="submit" value="로그인" align="middle"><br>
            	<div>
